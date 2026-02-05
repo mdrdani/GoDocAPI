@@ -23,8 +23,8 @@ COPY . .
 RUN swag init -g cmd/api/main.go
 
 # Build the application as a static binary (CGO_ENABLED=0) for Linux architecture
-# The output binary is named 'docapi' and pointed to the entry point cmd/api/main.go
-RUN CGO_ENABLED=0 GOOS=linux go build -o docapi ./cmd/api/main.go
+# The output binary is named 'godocapi' and pointed to the entry point cmd/api/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o godocapi ./cmd/api/main.go
 
 # Runtime stage uses a very lightweight Alpine image
 FROM alpine:latest
@@ -53,4 +53,4 @@ USER apps
 EXPOSE 8080
 
 # Command to run the application
-CMD ["./docapi"]
+CMD ["./godocapi"]
