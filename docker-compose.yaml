@@ -1,0 +1,9 @@
+services:
+  app:
+    image: godocapi:latest
+    container_name: godocapi-app
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
