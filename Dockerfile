@@ -42,9 +42,11 @@ WORKDIR /app
 
 # Copy the built binary from the builder stage
 COPY --from=builder /app/godocapi .
+# Copy the generated documentation
+COPY --from=builder /app/docs ./docs
 
-# Give the non-root user ownership of the binary
-RUN chown apps:apps /app/godocapi
+# Give the non-root user ownership of the binary and docs
+RUN chown apps:apps /app/godocapi && chown -R apps:apps ./docs
 
 # Run the container using the non-root user
 USER apps
