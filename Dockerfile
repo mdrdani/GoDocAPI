@@ -41,10 +41,10 @@ RUN addgroup -S apps && adduser -S apps -G apps
 WORKDIR /app
 
 # Copy the built binary from the builder stage
-COPY --from=builder /app/docapi .
+COPY --from=builder /app/godocapi .
 
 # Give the non-root user ownership of the binary
-RUN chown apps:apps /app/docapi
+RUN chown apps:apps /app/godocapi
 
 # Run the container using the non-root user
 USER apps
