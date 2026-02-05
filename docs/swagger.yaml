@@ -1,0 +1,182 @@
+basePath: /api/v1
+definitions:
+  model.Document:
+    properties:
+      content_type:
+        type: string
+      created_at:
+        type: string
+      filename:
+        type: string
+      id:
+        type: string
+      size:
+        type: integer
+      storage_path:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: High-performance document management API
+  title: DocAPI
+  version: "1.0"
+paths:
+  /documents:
+    get:
+      description: Retrieves a list of all documents sorted by creation time
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Document'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List all documents
+      tags:
+      - documents
+    post:
+      consumes:
+      - multipart/form-data
+      description: Uploads a file and stores metadata
+      parameters:
+      - description: Document file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Document'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Upload a new document
+      tags:
+      - documents
+  /documents/{id}:
+    delete:
+      description: Deletes a document's metadata and file content
+      parameters:
+      - description: Document ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete document
+      tags:
+      - documents
+    get:
+      description: Retrieves metadata for a specific document by ID
+      parameters:
+      - description: Document ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Document'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get document metadata
+      tags:
+      - documents
+  /documents/{id}/download:
+    get:
+      description: Downloads the actual file content of a document
+      parameters:
+      - description: Document ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Download document file
+      tags:
+      - documents
+  /health:
+    get:
+      description: Checks if the service is running
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Health Check
+      tags:
+      - health
+swagger: "2.0"
