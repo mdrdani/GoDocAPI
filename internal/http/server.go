@@ -5,6 +5,7 @@ import (
 	"godocapi/internal/service"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	fiberSwagger "github.com/swaggo/fiber-swagger"
@@ -22,6 +23,7 @@ func NewServer(cfg *config.Config, svc *service.DocumentService) *Server {
 
 	app.Use(logger.New())
 	app.Use(recover.New())
+	app.Use(cors.New())
 
 	app.Get("/swagger/*", fiberSwagger.WrapHandler)
 
