@@ -1,12 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "High-performance document management API",
+        "description": "High-performance document management API\nHigh-performance document management API",
         "title": "DocAPI",
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:8080",
     "basePath": "/api/v1",
     "paths": {
         "/documents": {

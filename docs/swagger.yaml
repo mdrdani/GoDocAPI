@@ -15,10 +15,11 @@ definitions:
       storage_path:
         type: string
     type: object
-host: localhost:8080
 info:
   contact: {}
-  description: High-performance document management API
+  description: |-
+    High-performance document management API
+    High-performance document management API
   title: DocAPI
   version: "1.0"
 paths:

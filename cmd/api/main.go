@@ -14,9 +14,9 @@ import (
 )
 
 // @title DocAPI
-// @version 1.0
+// @version 1.1
 // @description High-performance document management API
-// @host localhost:8080
+// @description High-performance document management API
 // @BasePath /api/v1
 func main() {
 	// 1. Load Configuration
