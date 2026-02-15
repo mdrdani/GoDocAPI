@@ -1,6 +1,7 @@
 # Binary files
 bin/
 docapi
+web/
 
 # Go dependencies and toolchain
 vendor/
