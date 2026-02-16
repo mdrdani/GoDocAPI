@@ -145,13 +145,21 @@ func (h *DocumentHandler) Download(c *fiber.Ctx) error {
 	if doc == nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Document not found"})
 	}
-	defer stream.Close()
+	// stream is closed by fiber's SendStream or manual close in error case
+	// defer stream.Close() // Do not close here, let SendStream take ownership
 
 	c.Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", doc.Filename))
 	c.Set("Content-Type", doc.ContentType)
 	c.Set("Content-Length", strconv.FormatInt(doc.Size, 10))
 
-	return c.SendStream(stream)
+	if err := c.SendStream(stream); err != nil {
+		// If SendStream fails, we must close the stream
+		stream.Close()
+		return err
+	}
+	
+	// If SendStream succeeds, it (or underlying fasthttp) takes responsibility for closing
+	return nil
 }
 
 // Delete godoc
