@@ -82,7 +82,8 @@ CREATE INDEX IF NOT EXISTS idx_documents_filename ON documents (filename);
     go run cmd/api/main.go
     ```
 
-### Using Docker
+
+### Using Docker (Single Container)
 
 1.  **Build the image**:
     ```bash
@@ -91,6 +92,37 @@ CREATE INDEX IF NOT EXISTS idx_documents_filename ON documents (filename);
 2.  **Run the container**:
     ```bash
     docker run -p 8080:8080 --env-file .env godocapi
+    ```
+
+## Deployment
+
+### Using Docker Compose
+
+To start the full application stack (Frontend + Backend):
+
+```bash
+docker-compose up --build
+```
+
+The services will be available at:
+-   **Frontend**: http://localhost:3000
+-   **Backend**: http://localhost:8080
+
+### Using Docker Swarm
+
+1.  **Initialize Swarm** (if not already initialized):
+    ```bash
+    docker swarm init
+    ```
+
+2.  **Deploy the Stack**:
+    ```bash
+    docker stack deploy -c docker-stack.yml godocapi
+    ```
+
+3.  **Verify Services**:
+    ```bash
+    docker service ls
     ```
 
 ## API Documentation (Swagger)

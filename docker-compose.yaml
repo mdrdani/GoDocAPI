@@ -1,9 +1,26 @@
 services:
-  app:
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    image: frontendgodocapi:latest
+    container_name: frontendgodocapi-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://backend:8080
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: godocapi:latest
     container_name: godocapi-app
     restart: unless-stopped
     ports:
-      - 8080:8080
+      - "8080:8080"
     env_file:
       - .env
